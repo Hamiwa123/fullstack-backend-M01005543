@@ -96,8 +96,12 @@ let lessons = [
     }
 ];
 
-app.use(function(request, response) {
-    console.log("In comes a request to: " + request.url);
+app.use(function(request, response, next) {
+    console.log(request.method + " request to " + request.url);
+    next();
+});
+
+app.get("/lessons", function(request, response) {
     response.json(lessons);
 });
 
