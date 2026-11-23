@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require("path");
 var cors = require('cors');
 var app = express();
 app.use(cors());
@@ -99,6 +100,13 @@ let lessons = [
 app.use(function(request, response, next) {
     console.log(request.method + " request to " + request.url);
     next();
+});
+
+var imagePath = path.resolve(__dirname, "images");
+app.use("/images", express.static(imagePath));
+
+app.use("/images", function(request, response) {
+    response.status(404).send("Image not found!");
 });
 
 app.get("/lessons", function(request, response) {
