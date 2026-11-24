@@ -3,6 +3,7 @@ var path = require("path");
 var cors = require('cors');
 var app = express();
 app.use(cors());
+app.use(express.json());
 
 let lessons = [
     {
@@ -111,6 +112,12 @@ app.use("/images", function(request, response) {
 
 app.get("/lessons", function(request, response) {
     response.json(lessons);
+});
+
+app.post("/orders", function(request, response) {
+    let order = request.body;
+    console.log("New order: " + order.name + ", " + order.phone + ", lessons: " + order.lessonIDs + ", spaces: " + order.spaces);
+    response.json({ message: "Order received" });
 });
 
 app.listen(3000, function() {
